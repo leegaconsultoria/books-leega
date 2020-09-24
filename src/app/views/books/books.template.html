@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 mt-5">
+        <h3 style="margin: 0 0 20px 0">Lista de livros</h3>
+      <div class="table-responsive" style="margin-top: 20px;">
+        <table datatable [dtOptions]=" dtOptions" class="table border-table table-hover">
+          <thead>
+            <tr>
+              <th><input type="checkbox"></th>
+              <th class="text-center">ID</th>
+              <th class="text-center">Livro</th>
+              <th class="text-center">Autor</th>
+              <th class="text-center">CPF</th>
+              <th class="text-center">Data publicacao</th>
+              <th class="text-center">Editor</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let book of books'>
+              <td><input type="checkbox">
+              </td>
+              <td class="text-center">{{book.id}}</td>
+              <td class="text-center">{{book.name}}</td>
+              <ng-template ngFor let-author [ngForOf]="book.authorSet">
+                <td class="text-center">
+                  {{author.name}}
+                </td>
+                <td class="text-center">
+                  {{author.cpf}}
+                </td>
+              </ng-template>
+              <td class="text-center">{{book.publicationDate}}</td>
+              <td class="text-center">{{book.editor.name}}</td>
+              <td><i class="fa fa-edit"></i></td>
+              <td><i class="fa fa-trash"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-right mt-3">
+        <button mat-mini-fab style="background-color: #e48d32;" [routerLink]="['/books-register']" aria-label="Adicionar livro">
+          <mat-icon>add_list</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

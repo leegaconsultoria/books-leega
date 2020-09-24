@@ -1,0 +1,32 @@
+<header class="shadow-lg header">
+    <nav class="navbar navbar-expand-lg navbar-light top-nav">
+        <a class="navbar-brand" [routerLink]="['/books']">
+            <div class="logo"></div>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" style="cursor: pointer">
+                    <a class="nav-link" [routerLink]="['/books']" [routerLinkActive]="['menuActive']">Livros</a>
+                </li>
+                <li class="nav-item" style="cursor: pointer">
+                    <a class="nav-link" [routerLink]="['/authors']" [routerLinkActive]="['menuActive']">Autores</a>
+                </li>
+                <li class="nav-item" style="cursor: pointer">
+                    <a class="nav-link" [routerLink]="['/editors']" [routerLinkActive]="['menuActive']">Editores</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" [routerLink]=""
+                        [routerLinkActive]="['menuActive']">teste</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]=""
+                        [routerLinkActive]="['menuActive']">teste</a>
+                </li> -->
+               
+            </ul>
+
+         
+        </div>
+    </nav>
+</header>
+<router-outlet></router-outlet>
