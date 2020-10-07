@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  apiBooks: 'localhost:8080'
+  apiBooks: 'http://localhost:8257/leega-challenge/book-srvc'
 };
 
 /*
