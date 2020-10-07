@@ -1,51 +1,51 @@
 <div class="container">
     <h3 class="mt-5">Cadastro de livros</h3>
-  <div class="row mt-3">
-  
-    <div class="col-12">
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
-          <mat-label>Nome do livro</mat-label>
-          <input matInput placeholder="Digite o nome do livro" value="">
-        </mat-form-field>
+    <div class="row mt-3">
 
-        <mat-form-field appearance="fill">
-            <mat-label>Data de publicacao</mat-label>
-          <!-- #docregion toggle -->
-            <input matInput [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          <!-- #enddocregion toggle -->
-          </mat-form-field>
+        <div class="col-12">
+            <form [formGroup]="bookForm" (ngSubmit)="bookRegister();" class="example-form">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nome do livro</mat-label>
+                    <input matInput formControlName="bookName" placeholder="Digite o nome do livro" value="">
+                </mat-form-field>
 
-        <h4>Selecione o Autor</h4>
-        <mat-form-field appearance="fill">
-          <mat-label>Selecione</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let author of authors" [value]="author.value">
-              {{author.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Data de publicacao</mat-label>
+                    <!-- #docregion toggle -->
+                    <input formControlName="publishDate" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <!-- #enddocregion toggle -->
+                </mat-form-field>
 
-        <h4>Selecione o Editor</h4>
-        <mat-form-field appearance="fill">
-          <mat-label>Selecione</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let editor of editors" [value]="editor.value">
-              {{editor.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div class="row">
-            <div class="col text-right">
-                <button mat-stroked-button style="color: #e48d32; margin-right: 15px;"  [routerLink]="['/books']">Voltar</button>
-                <button mat-stroked-button style="color: #e48d32;">Salvar</button>
-            </div>
-           
+                <h4>Selecione o Autor</h4>
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecione</mat-label>
+                    <mat-select formControlName="authorName">
+                        <mat-option *ngFor="let author of authors" [value]="author.value">
+                            {{author.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <h4>Selecione o Editor</h4>
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecione</mat-label>
+                    <mat-select formControlName="editorName">
+                        <mat-option *ngFor="let editor of editors" [value]="editor.value">
+                            {{editor.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="row">
+                    <div class="col text-right">
+                        <button mat-stroked-button style="color: #e48d32; margin-right: 15px;" [routerLink]="['/books']">Voltar</button>
+                        <button mat-stroked-button style="color: #e48d32;" type="submit">Salvar</button>
+                    </div>
+
+                </div>
+
+            </form>
         </div>
-       
-      </form>
     </div>
-  </div>
 </div>

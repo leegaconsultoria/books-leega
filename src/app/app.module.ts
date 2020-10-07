@@ -1,3 +1,5 @@
+import { HelperService } from './_helpers/helper.service';
+import { BooksService } from './services/books.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -59,6 +61,10 @@ import { AuthorRegisterComponent } from './views/author-register/author-register
 import { EditorRegisterComponent } from './views/editor-register/editor-register.component';
 import { EditorsComponent } from './views/editors/editors.component';
 import { AuthorsComponent } from './views/authors/authors.component';
+import { OnlynumberDirective } from './diretives/onlynumber.directive';
+import { HttpModule } from '@angular/http';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -69,9 +75,14 @@ import { AuthorsComponent } from './views/authors/authors.component';
     AuthorRegisterComponent,
     EditorRegisterComponent,
     EditorsComponent,
-    AuthorsComponent
+    AuthorsComponent,
+    OnlynumberDirective
   ],
   imports: [
+    HttpModule,
+    ToastrModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     DataTablesModule,
@@ -121,7 +132,10 @@ import { AuthorsComponent } from './views/authors/authors.component';
     PortalModule,
     ScrollingModule,
   ],
-  providers: [],
+  providers: [
+    BooksService,
+    HelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
