@@ -7,15 +7,15 @@ import { HelperService } from '../_helpers/helper.service';
 
 @Injectable()
 export class BooksService {
-  constructor(private http: Http, private helper: HelperService) {}
+  constructor(private helper: HelperService) {}
 
   sendBook(book): any {
-    const url = environment.apiBooks + `/books`;
+    const url = environment.apiBooks + `/books/`;
     return this.helper.httpPost(url, book);
   }
 
   getAllBooks(): any {
-    const url = environment.apiBooks + `/books`;
+    const url = environment.apiBooks + `/books/`;
     return this.helper.httpGet(url);
   }
 
