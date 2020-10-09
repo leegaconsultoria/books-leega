@@ -14,6 +14,8 @@ export class BooksComponent implements OnInit {
   books = [];
   author = [];
   dtOptions: DataTables.Settings = {};
+  bookName;
+  valueBook;
 
   public constructor(private booksService: BooksService, private toastr: ToastrService) {}
 
@@ -264,6 +266,10 @@ export class BooksComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getBook(book): any {
+    this.bookName = book.name;
   }
 
   deleteBook(bookId): any {

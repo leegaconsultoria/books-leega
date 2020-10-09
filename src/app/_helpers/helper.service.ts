@@ -16,7 +16,7 @@ export class HelperService {
             }),
             catchError((err: HttpErrorResponse) => {
                 if (err.status === 401) {
-                    window.location.href = '/login';
+                   console.log(err);
                 } else {
                   return throwError(err);
                 }
@@ -32,7 +32,7 @@ export class HelperService {
             }),
             catchError((err: HttpErrorResponse) => {
                 if (err.status === 401) {
-                    window.location.href = '/login';
+                   console.log(err);
                 } else {
                   return throwError(err);
                 }
@@ -48,7 +48,7 @@ export class HelperService {
             }),
             catchError((err: HttpErrorResponse) => {
                 if (err.status === 401) {
-                    window.location.href = '/login';
+                   console.log(err);
                 } else {
                   return throwError(err);
                 }
@@ -64,7 +64,7 @@ export class HelperService {
             }),
             catchError((err: HttpErrorResponse) => {
                 if (err.status === 401) {
-                    window.location.href = '/login';
+                   console.log(err);
                 } else {
                   return throwError(err);
                 }

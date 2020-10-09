@@ -13,6 +13,7 @@
                             <th class="text-center">Data publicacao</th>
                             <th class="text-center">Editor</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +30,10 @@
                             </ng-template>
                             <td class="text-center">{{book.publicationDate}}</td>
                             <td class="text-center">{{book.editor.name}}</td>
-                            <td><i class="fa fa-trash" style="cursor: pointer; color: red" (click)="this.deleteBook(book.id)"></i></td>
+                            <td><i class="fa fa-edit" style="cursor: pointer;" data-toggle="modal" data-target="#modalEditBook" (click)="getBook(book)"></i>
+                            </td>
+                            <td><i class="fa fa-trash" style="cursor: pointer; color: red" (click)="this.deleteBook(book.id)"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -38,6 +42,34 @@
                 <button mat-mini-fab style="background-color: #e48d32;" [routerLink]="['/books-register']" aria-label="Adicionar livro">
           <mat-icon>add_list</mat-icon>
         </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditBook" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Livro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="col-12">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Nome do livro</mat-label>
+                        <input matInput placeholder="Digite o nome do livro" value="{{this.bookName}}">
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button mat-stroked-button style="color: #e48d32; margin-right: 15px;" data-dismiss="modal">Fechar</button>
+                <button mat-stroked-button style="color: #e48d32;" type="submit">Salvar</button>
             </div>
         </div>
     </div>

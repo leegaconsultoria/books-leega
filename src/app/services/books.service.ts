@@ -15,7 +15,7 @@ export class BooksService {
   }
 
   getAllBooks(): any {
-    const url = environment.apiBooks + `/books`;
+    const url = environment.apiBooks + `/books/`;
     return this.helper.httpGet(url);
   }
 
