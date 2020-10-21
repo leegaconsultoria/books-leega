@@ -1,7 +1,10 @@
 import { BooksService } from './../../services/books.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-books-register',
@@ -12,45 +15,72 @@ export class BooksRegisterComponent implements OnInit {
 
   book;
   bookForm: FormGroup;
-  authors = [
-    {value: '0', viewValue: 'Robert Kiyosaki'},
-    {value: '1', viewValue: 'Pedro Nunes'},
-    {value: '2', viewValue: 'Jessica Andrade'}
-  ];
+  authorsIds = new FormControl();
+  authors
+  editors
 
-  editors = [
-    {value: '0', viewValue: 'AltaBooks'},
-    {value: '1', viewValue: 'Teste Editor'},
-    {value: '2', viewValue: 'Sextou'}
-  ];
-
-  constructor(private booksService: BooksService, private toastr: ToastrService, private formBuilder: FormBuilder) { }
+  constructor(private route: Router, private booksService: BooksService, private toastr: ToastrService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+     this.loadingAuthors();
+     this.loadingEditors();
     this.bookForm = this.formBuilder.group({
-      bookName: ['', Validators.required],
-      publishDate: ['', Validators.required],
-      authorName: ['', Validators.required],
-      editorName: ['', Validators.required],
+      name: ['', Validators.required],
+      publicationDate: ['', Validators.required],
+      authors: ['', Validators.required],
+      editor: ['', Validators.required],
     });
+    moment(this.bookForm.value.publishDate).format("DD-MM-YYYY")
+    console.log(this.bookForm.value.publishDate)
   }
 
   bookRegister(): any {
+    const localeStringDate = this.bookForm.value.publicationDate.toLocaleString()
+    const publicationDate = moment(localeStringDate).format('YYYY-DD-MM')
     const params = {
-      bookName: this.bookForm.value.bookName,
-      publishDate: this.bookForm.value.publishDate,
-      authorName: this.bookForm.value.authorName,
-      editorName: this.bookForm.value.editorName
+      name: this.bookForm.value.name,
+      publicationDate: publicationDate,
+      authors: this.authorsIds.value,
+      editor: Number(this.bookForm.value.editor),
+      isbnNumber: 9781586210915
     };
-    console.log(params)
+    console.log('params', params)
+    console.log("booksform", this.bookForm)
     this.booksService.sendBook(params).subscribe(
       (data) => {
         this.toastr.success('Livro adicionado com sucesso');
+        this.route.navigate(["/books"])
         console.log(data);
       },
       (error) => {
         this.toastr.error('Erro ao adicionar livro');
         console.log(error);
+      }
+    );
+  }
+
+  loadingAuthors(): any {
+    this.booksService.getAllAuthors().subscribe(
+      data => {
+        this.authors = data.data.authors;
+        console.log('authors', this.authors)
+      },
+      (error) => {
+        this.toastr.error('Erro ao carregar autores');
+        console.log('error', error);
+      }
+    );
+  }
+
+  loadingEditors(): any {
+    this.booksService.getAllEditors().subscribe(
+      data => {
+        this.editors = data.data.editors;
+        console.log('data', data)
+      },
+      (error) => {
+        this.toastr.error('Erro ao carregar livros');
+        console.log('error', error);
       }
     );
   }

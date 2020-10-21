@@ -1,29 +1,65 @@
 <div class="container">
-    <div class="row">
-      <div class="col-lg-12 mt-5">
-          <h3 style="margin: 0 0 20px 0">Lista de Editores</h3>
-        <div class="table-responsive" style="margin-top: 20px;">
-          <table datatable [dtOptions]=" dtOptions" class="table border-table table-hover">
-            <thead>
-              <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">Nome</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor='let editor of editors'>
-                <td class="text-center">{{editor.id}}</td>
-                <td class="text-center">{{editor.name}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="text-right mt-3">
-          <button mat-mini-fab style="background-color: #e48d32;" [routerLink]="['/editor-register']" aria-label="">
-            <mat-icon>add_list</mat-icon>
-          </button>
-        </div>
+  <div class="row">
+    <div class="col-lg-12 mt-5">
+      <h3 style="margin: 0 0 20px 0">Lista de Editores</h3>
+      <div class="table-responsive" style="margin-top: 20px;">
+        <table datatable [dtOptions]=" dtOptions" class="table border-table table-hover">
+          <thead>
+            <tr>
+              <th class="text-center">ID</th>
+              <th class="text-center">Nome</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let editor of editors'>
+              <td class="text-center">{{editor.id}}</td>
+              <td class="text-center">{{editor.name}}</td>
+              <td><i class="fa fa-edit" style="cursor: pointer;" data-toggle="modal" data-target="#modalEditEditor"
+                  (click)="getEditor(editor)"></i>
+              </td>
+              <td><i class="fa fa-trash" style="cursor: pointer; color: red" (click)="this.deleteEditor(editor.id)"></i>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-right mt-3">
+        <button mat-mini-fab style="background-color: #e48d32;" [routerLink]="['/editor-register']" aria-label="">
+          <mat-icon>add_list</mat-icon>
+        </button>
       </div>
     </div>
   </div>
-  
+</div>
+
+
+<div class="modal fade" id="modalEditEditor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+        <div class="col-12">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nome do editor</mat-label>
+            <input matInput placeholder="Digite o nome do editor" [(ngModel)]="editorName" value="{{editorName}}">
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button mat-stroked-button style="color: #e48d32; margin-right: 15px;" data-dismiss="modal">Fechar</button>
+        <button mat-stroked-button data-dismiss="modal" style="color: #e48d32;" type="button"
+          (click)="editEditor()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

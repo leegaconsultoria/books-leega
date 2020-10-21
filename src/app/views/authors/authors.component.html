@@ -3,19 +3,27 @@
       <div class="col-lg-12 mt-5">
           <h3 style="margin: 0 0 20px 0">Lista de Autores</h3>
         <div class="table-responsive" style="margin-top: 20px;">
-          <table datatable [dtOptions]=" dtOptions" class="table border-table table-hover">
+          <table datatable [dtOptions]="dtOptions" class="table border-table table-hover">
             <thead>
               <tr>
                 <th class="text-center">ID</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">CPF</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor='let author of authors'>
                 <td class="text-center">{{author.id}}</td>
                 <td class="text-center">{{author.name}}</td>
-                <td class="text-center">{{author.document}}</td>
+                <td class="text-center">{{author.cpf}}</td>
+                <td><i class="fa fa-edit" style="cursor: pointer;" data-toggle="modal" data-target="#modalEditAuthor"
+                  (click)="getAuthor(author)"></i>
+              </td>
+                <td><i class="fa fa-trash" style="cursor: pointer; color: red"
+                  (click)="this.deleteAuthor(author.id)"></i>
+          </td>
+                
               </tr>
             </tbody>
           </table>
@@ -29,3 +37,41 @@
     </div>
   </div>
   
+
+<div class="modal fade" id="modalEditAuthor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Autor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="col-12">
+                  <div class="row">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Nome do autor</mat-label>
+                        <input matInput placeholder="Digite o nome do editor" [(ngModel)]="authorName" value="{{authorName}}">
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>CPF do Autor</mat-label>
+                      <input appOriginalMask="cpf" maxlength="14" matInput placeholder="Digite o nome do Autor" [(ngModel)]="authorCPF" value="{{authorCPF}}">
+                  </mat-form-field>
+                </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button mat-stroked-button style="color: #e48d32; margin-right: 15px;"
+                    data-dismiss="modal">Fechar</button>
+                <button mat-stroked-button data-dismiss="modal" style="color: #e48d32;" type="button" (click)="editAuthor()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

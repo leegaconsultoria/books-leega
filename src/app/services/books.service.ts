@@ -30,12 +30,12 @@ export class BooksService {
   }
 
   sendAuthor(author): any {
-    const url = environment.apiBooks + `/authors`;
+    const url = environment.apiBooks + `/authors/`;
     return this.helper.httpPost(url, author);
   }
 
   getAllAuthors(): any {
-    const url = environment.apiBooks + `/authors`;
+    const url = environment.apiBooks + `/authors/`;
     return this.helper.httpGet(url);
   }
 
@@ -44,18 +44,18 @@ export class BooksService {
     return this.helper.httpDelete(url);
   }
 
-  editAuthor(authorId): any {
+  editAuthor(authorId, data): any {
     const url = environment.apiBooks + `/authors/${authorId}`;
-    return this.helper.httpPut(url, authorId);
+    return this.helper.httpPut(url, data);
   }
 
   sendEditor(editor): any {
-    const url = environment.apiBooks + `/editors`;
+    const url = environment.apiBooks + `/editors/`;
     return this.helper.httpPost(url, editor);
   }
 
   getAllEditors(): any {
-    const url = environment.apiBooks + `/editors`;
+    const url = environment.apiBooks + `/editors/`;
     return this.helper.httpGet(url);
   }
 
@@ -64,9 +64,9 @@ export class BooksService {
     return this.helper.httpDelete(url);
   }
 
-  editEditor(editorId): any {
+  editEditor(editorId, name): any {
     const url = environment.apiBooks + `/editors/${editorId}`;
-    return this.helper.httpPut(url, editorId);
+    return this.helper.httpPut(url, { name: name });
   }
 
 }

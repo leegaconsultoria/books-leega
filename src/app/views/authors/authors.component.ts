@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { BooksService } from 'src/app/services/books.service';
 
 @Component({
   selector: 'app-authors',
@@ -8,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class AuthorsComponent implements OnInit {
   authors = []
   dtOptions: DataTables.Settings = {};
+  editAuthorData
+  authorId
+  authorName
+  authorCPF
 
-  constructor() { }
+
+  constructor(private booksService: BooksService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.loadingAuthors()
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -39,28 +47,58 @@ export class AuthorsComponent implements OnInit {
         }
       }
     };
-    this.authors = [
-      {
-        id: 12131,
-        name: 'Autor 166',
-        document: '222.333.444-01'
+  }
+
+  loadingAuthors(): any {
+    this.booksService.getAllAuthors().subscribe(
+      data => {
+        this.authors = data.data.authors;
+        console.log('data', data)
       },
-      {
-        id: 1323,
-        name: 'Autor 1321',
-        document: '123.432.566-76'
-      },
-    {
-        id: 1534,
-        name: 'Autor 132',
-        document: '332.123.655-32'
-      },
-  {
-        id: 1321,
-        name: 'Autor 132',
-        document: '392.347.998-01'
+      (error) => {
+        this.toastr.error('Erro ao carregar autores');
+        console.log('error', error);
       }
-    ]
+    );
+  }
+
+  deleteAuthor(authorId): any {
+    this.booksService.deleteAuthor(authorId).subscribe(
+      (data) => {
+        this.toastr.success('Autor removido com sucesso');
+        console.log(data);
+        this.loadingAuthors()
+      },
+      (error) => {
+        this.toastr.error('Erro ao remover autor');
+        console.log(error);
+      }
+    );
+  }
+
+  getAuthor(author): any {
+    this.authorName = author.name
+    this.authorCPF = author.cpf
+    this.editAuthorData = {
+      name:  this.authorName,
+      cpf: this.authorCPF
+    }
+    this.authorId = author.id
+  }
+
+  editAuthor() {
+    this.booksService.editAuthor(this.authorId, {name: this.authorName, cpf: this.authorCPF}).subscribe(
+      data => {
+        console.log(this.authorName)
+        console.log(this.authorCPF)
+        console.log(this.editAuthorData)
+        this.toastr.success('Editado com sucesso');
+        this.loadingAuthors();
+      }, error => {
+        console.log("errorauthor", error)
+        this.toastr.error('Erro ao editar');
+      }
+    )
   }
 
 }

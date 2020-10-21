@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { BooksService } from 'src/app/services/books.service';
 
 @Component({
   selector: 'app-editors',
@@ -8,10 +11,13 @@ import { Component, OnInit } from '@angular/core';
 export class EditorsComponent implements OnInit {
   editors = []
   dtOptions: DataTables.Settings = {};
+  editorName
+  editorId
 
-  constructor() { }
+  constructor(private booksService: BooksService, private toastr: ToastrService, private route: Router) { }
 
   ngOnInit(): void {
+    this.loadingEditors();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -39,26 +45,50 @@ export class EditorsComponent implements OnInit {
         }
       }
     };
-    this.editors = [
-      {
-        id: 11234,
-        name: 'Editor 132',
-        document: '392.456.745-22'
+  
+  }
+
+  loadingEditors(): any {
+    this.booksService.getAllEditors().subscribe(
+      data => {
+        this.editors = data.data.editors;
+        console.log('editors', data)
       },
-      {
-        id: 2432,
-        name: 'Editor 2412',
-        document: '444.554.998-33'
-      }, {
-        id: 324,
-        name: 'Editor 31231',
-        document: '222.6756.424-55'
-      }, {
-        id: 4233,
-        name: 'Editor 442',
-        document: '111.456.223-23'
+      (error) => {
+        this.toastr.error('Erro ao carregar autores');
+        console.log('error', error);
       }
-    ]
+    );
+  }
+
+  deleteEditor(editorId): any {
+    this.booksService.deleteEditor(editorId).subscribe(
+      (data) => {
+        this.toastr.success('Editor removido com sucesso');
+        console.log(data);
+        this.loadingEditors()
+      },
+      (error) => {
+        this.toastr.error('Erro ao remover Editor');
+        console.log(error);
+      }
+    );
+  }
+
+  getEditor(editor): any {
+    this.editorName = editor.name;
+    this.editorId = editor.id
+  }
+
+  editEditor() {
+    this.booksService.editEditor(this.editorId, this.editorName).subscribe(
+      data => {
+        this.toastr.success('Editado com sucesso');
+        this.loadingEditors();
+      }, error => {
+        this.toastr.error('Erro ao editar');
+      }
+    )
   }
 
 }

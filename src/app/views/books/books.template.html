@@ -20,41 +20,51 @@
                         <tr *ngFor='let book of books'>
                             <td class="text-center">{{book.id}}</td>
                             <td class="text-center">{{book.name}}</td>
-                            <ng-template ngFor let-author [ngForOf]="book.authorSet">
-                                <td class="text-center">
-                                    {{author.name}}
-                                </td>
-                                <td class="text-center">
-                                    {{author.cpf}}
-                                </td>
-                            </ng-template>
+                            <td>
+                                <div class="data-list">
+                                    <div class="data-item" *ngFor="let author of book.authors">
+                                        {{ author.name }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="data-list">
+                                    <div class="data-item" *ngFor="let author of book.authors">
+                                        {{ author.cpf }}
+                                    </div>
+                                </div>
+                            </td>
                             <td class="text-center">{{book.publicationDate}}</td>
                             <td class="text-center">{{book.editor.name}}</td>
-                            <td><i class="fa fa-edit" style="cursor: pointer;" data-toggle="modal" data-target="#modalEditBook" (click)="getBook(book)"></i>
+                            <td><i class="fa fa-edit" style="cursor: pointer;" data-toggle="modal"
+                                    data-target="#modalEditBook" (click)="getBook(book)"></i>
                             </td>
-                            <td><i class="fa fa-trash" style="cursor: pointer; color: red" (click)="this.deleteBook(book.id)"></i>
+                            <td><i class="fa fa-trash" style="cursor: pointer; color: red"
+                                    (click)="this.deleteBook(book.id)"></i>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="text-right mt-3">
-                <button mat-mini-fab style="background-color: #e48d32;" [routerLink]="['/books-register']" aria-label="Adicionar livro">
-          <mat-icon>add_list</mat-icon>
-        </button>
+                <button mat-mini-fab style="background-color: #e48d32;" [routerLink]="['/books-register']"
+                    aria-label="Adicionar livro">
+                    <mat-icon>add_list</mat-icon>
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalEditBook" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditBook" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Editar Livro</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
 
@@ -64,11 +74,36 @@
                         <mat-label>Nome do livro</mat-label>
                         <input matInput placeholder="Digite o nome do livro" value="{{this.bookName}}">
                     </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Data de publicacao</mat-label>
+                        <!-- #docregion toggle -->
+                        <input  matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <!-- #enddocregion toggle -->
+                    </mat-form-field>
+                    <h4>Selecione o Autor</h4>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Autor</mat-label>
+                        <mat-select [formControl]="authorsIds" multiple>
+                          <mat-option style="z-index: 999!important;" *ngFor="let author of authors" [value]="author.id">{{author.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <h4>Selecione o Editor</h4>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecione</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let editor of editors" [value]="editor.id">
+                                {{editor.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button mat-stroked-button style="color: #e48d32; margin-right: 15px;" data-dismiss="modal">Fechar</button>
+                <button mat-stroked-button style="color: #e48d32; margin-right: 15px;"
+                    data-dismiss="modal">Fechar</button>
                 <button mat-stroked-button style="color: #e48d32;" type="submit">Salvar</button>
             </div>
         </div>
